@@ -12,12 +12,13 @@ type IImage = { width: number; height: number };
 interface IProps {
   preview: IPreview;
   image: IImage;
+  onResult(image: string): void;
   onDelete?: VoidFunction;
 }
 
 // ---------------------------------------------------------------------
 
-export const ExampleComponent: FunctionComponent<IProps> = ({ preview, image, onDelete }) => {
+export const ExampleComponent: FunctionComponent<IProps> = ({ preview, image, onResult, onDelete }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
@@ -38,7 +39,7 @@ export const ExampleComponent: FunctionComponent<IProps> = ({ preview, image, on
     <React.Fragment>
       <DropArea {...previewProps} image={preview.url} onDrop={setFile} onDelete={onDelete} />
       <Dialog open={!!file} onClose={handleDialogClose}>
-        {file && <Crop image={file} width={image.width} height={image.height} onClose={handleDialogClose} />}
+        {file && <Crop image={file} width={image.width} height={image.height} onResult={onResult} onClose={handleDialogClose} />}
       </Dialog>
     </React.Fragment>
   );

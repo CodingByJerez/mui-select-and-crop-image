@@ -1,6 +1,6 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { alpha, Box, Divider, Fab, Menu, MenuItem, styled } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState, MouseEvent } from 'react';
+import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react';
 import useDropImage, { IFileImage } from './useDropzone';
 
 // ---------------------------------------------------------------------
@@ -14,14 +14,14 @@ const CardMediaStyle = styled('div')(({ theme }) => ({
   backgroundColor: alpha(theme.palette.primary.main, 0.72),
 }));
 
-const CoverStyle = styled('img')(() => ({
+const CoverStyle = styled('img')(({ theme }) => ({
   zIndex: 10,
-  top: 8,
-  borderRadius: 1,
+  top: 0,
+  borderRadius: theme.spacing(1),
   objectFit: 'cover',
   position: 'absolute',
-  width: 'calc(100% - 16px)',
-  height: 'calc(100% - 16px)',
+  width: '100%',
+  height: '100%',
 }));
 
 // ---------------------------------------------------------------------
