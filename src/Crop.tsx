@@ -7,6 +7,7 @@ import Cropper from 'react-easy-crop';
 import { Area } from '../node_modules/react-easy-crop/types';
 import getCroppedImageService from './getCroppedImageService';
 import { IFileImage } from './useDropzone';
+import useStore from './useStore';
 import Util from './util';
 
 // ---------------------------------------------------------------------
@@ -22,6 +23,7 @@ type IProps = {
 // ---------------------------------------------------------------------
 
 const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClose }) => {
+  const { trans } = useStore();
   const { minZoom, maxZoom } = useMemo(() => {
     if (height > width) {
       throw new Error('only for horizontal photo for the moment');
@@ -75,10 +77,10 @@ const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClo
   return (
     <Card>
       <CardHeader
-        title={'Crop Image'}
+        title={trans.title}
         action={
           <IconButton
-            aria-label="close"
+            aria-label={trans.close}
             onClick={onClose}
             sx={{
               position: 'absolute',
@@ -115,7 +117,9 @@ const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClo
             <PanoramaIcon />
           </Stack>
 
-          <Button onClick={handleSave}>Save</Button>
+          <Button variant="contained" onClick={handleSave}>
+            {trans.save}
+          </Button>
         </Stack>
       </CardActions>
     </Card>

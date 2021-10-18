@@ -2,6 +2,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { alpha, Box, Divider, Fab, Menu, MenuItem, styled } from '@mui/material';
 import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react';
 import useDropImage, { IFileImage } from './useDropzone';
+import useStore from './useStore';
 
 // ---------------------------------------------------------------------
 
@@ -40,6 +41,8 @@ type IDropAreaProps = {
 // ---------------------------------------------------------------------
 
 const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, onDelete, onDrop, minWidth, minHeight, ...props }) => {
+  const { trans } = useStore();
+
   const [image, setImage] = useState<null | string>(props.image || null);
   const [anchorOption, setAnchorOption] = useState<null | HTMLElement>(null);
 
@@ -73,12 +76,12 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, onDelete, 
             <MoreVertIcon />
           </Fab>
           <Menu anchorEl={anchorOption} open={!!anchorOption} onClose={handleClose}>
-            <MenuItem onClick={handleClickEdit}>Edit</MenuItem>
+            <MenuItem onClick={handleClickEdit}>{trans.edit}</MenuItem>
             {onDelete && image && (
               <React.Fragment>
                 <Divider />
                 <MenuItem color="error" onClick={handleClose}>
-                  delete
+                  {trans.delete}
                 </MenuItem>
               </React.Fragment>
             )}

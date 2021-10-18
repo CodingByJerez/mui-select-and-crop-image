@@ -1,5 +1,6 @@
 import { Dialog } from '@mui/material';
 import React, { FunctionComponent, useMemo } from 'react';
+import { Provider } from './Context';
 import Crop from './Crop';
 import DropArea from './DropArea';
 import { IFileImage } from './useDropzone';
@@ -35,15 +36,20 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResul
     setFile(null);
   };
 
+  const handleResult = (image: string): void => {
+    onResult(image);
+    setFile(null);
+  };
+
   return (
     <React.Fragment>
       <DropArea {...previewProps} image={preview.url} onDrop={setFile} onDelete={onDelete} />
       <Dialog open={!!file} onClose={handleDialogClose} maxWidth={false}>
-        {file && <Crop image={file} width={image.width} height={image.height} onResult={onResult} onClose={handleDialogClose} />}
+        {file && <Crop image={file} width={image.width} height={image.height} onResult={handleResult} onClose={handleDialogClose} />}
       </Dialog>
     </React.Fragment>
   );
 };
 
-export { SelectAndCropImage };
+export { SelectAndCropImage, Provider as SelectAndCropImageProvider };
 export default SelectAndCropImage;
