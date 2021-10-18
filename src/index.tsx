@@ -18,7 +18,7 @@ interface IProps {
 
 // ---------------------------------------------------------------------
 
-export const ExampleComponent: FunctionComponent<IProps> = ({ preview, image, onResult, onDelete }) => {
+export const UploadAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResult, onDelete }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
