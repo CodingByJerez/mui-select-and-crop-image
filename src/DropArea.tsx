@@ -73,7 +73,7 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
     <Box sx={{ width }}>
       <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})` }}>
         <Box display={'flex'} position={'absolute'} top={0} bottom={0} left={0} right={0} justifyContent={'center'} alignItems={'center'}>
-          {!isLoading && <CircularProgress color="info" />}
+          {isLoading && <CircularProgress color="info" />}
           {image && <CoverStyle alt="Preview Image" src={image} />}
           <Box position="absolute" top={0} right={0} m={1} zIndex={11}>
             <Fab size="small" color="default" onClick={handleClick}>
