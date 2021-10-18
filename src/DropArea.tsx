@@ -43,7 +43,7 @@ type IDropAreaProps = {
 // ---------------------------------------------------------------------
 
 const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading, onDelete, onDrop, minWidth, minHeight, ...props }) => {
-  const { trans } = useStore();
+  const { trans, colors } = useStore();
 
   const [image, setImage] = useState<null | string>(props.image || null);
   const [anchorOption, setAnchorOption] = useState<null | HTMLElement>(null);
@@ -73,7 +73,7 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
     <Box sx={{ width }}>
       <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})` }}>
         <Box display={'flex'} position={'absolute'} top={0} bottom={0} left={0} right={0} justifyContent={'center'} alignItems={'center'}>
-          {isLoading && <CircularProgress color="info" />}
+          {isLoading && <CircularProgress color="info" sx={{ color: colors.loader }} />}
           {image && <CoverStyle alt="Preview Image" src={image} />}
           <Box position="absolute" top={0} right={0} m={1} zIndex={11}>
             <Fab size="small" color="default" onClick={handleClick}>

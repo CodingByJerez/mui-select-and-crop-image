@@ -8,6 +8,9 @@ type IContext = {
     save: string;
     delete: string;
   };
+  colors: {
+    loader: string;
+  };
 };
 
 const defaultValues: IContext = {
@@ -18,12 +21,15 @@ const defaultValues: IContext = {
     save: 'Save',
     delete: 'Delete',
   },
+  colors: {
+    loader: 'info',
+  },
 };
 
 const Context = createContext<IContext>(defaultValues);
 
-const Provider: FunctionComponent<IContext> = ({ trans, children }) => {
-  return <Context.Provider value={{ trans }}>{children}</Context.Provider>;
+const Provider: FunctionComponent<IContext> = ({ children, ...value }) => {
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export { Context, Provider };
