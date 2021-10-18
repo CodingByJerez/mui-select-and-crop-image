@@ -14,13 +14,14 @@ type IImage = { width: number; height: number; returnType?: RETURN_TYPE };
 interface IProps {
   preview: IPreview;
   image: IImage;
+  isLoading?: boolean;
   onResult(image: string): void;
   onDelete?: VoidFunction;
 }
 
 // ---------------------------------------------------------------------
 
-const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResult, onDelete }) => {
+const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoading, onResult, onDelete }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
@@ -44,7 +45,7 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResul
 
   return (
     <React.Fragment>
-      <DropArea {...previewProps} minHeight={image.height} minWidth={image.width} image={preview.url} onDrop={setFile} onDelete={onDelete} />
+      <DropArea {...previewProps} isLoading={isLoading} minHeight={image.height} minWidth={image.width} image={preview.url} onDrop={setFile} onDelete={onDelete} />
       <Dialog open={!!file} onClose={handleDialogClose} maxWidth={false}>
         {file && <Crop image={file} width={image.width} height={image.height} onResult={handleResult} onClose={handleDialogClose} />}
       </Dialog>
