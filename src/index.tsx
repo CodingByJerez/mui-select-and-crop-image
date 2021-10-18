@@ -47,7 +47,7 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoadi
     <React.Fragment>
       <DropArea {...previewProps} isLoading={isLoading} minHeight={image.height} minWidth={image.width} image={preview.url} onDrop={setFile} onDelete={onDelete} />
       <Dialog open={!!file} onClose={handleDialogClose} maxWidth={false}>
-        {file && <Crop image={file} width={image.width} height={image.height} onResult={handleResult} onClose={handleDialogClose} />}
+        {file && <Crop image={file} width={image.width} height={image.height} returnType={image.returnType} onResult={handleResult} onClose={handleDialogClose} />}
       </Dialog>
     </React.Fragment>
   );

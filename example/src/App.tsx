@@ -5,6 +5,7 @@ const App: React.FunctionComponent = () => {
   const [currentImage, setCurrentImage] = useState<undefined | string>();
 
   const handleResult = (newImage: string) => {
+    console.log('newImage:', newImage);
     setCurrentImage(newImage);
   };
 

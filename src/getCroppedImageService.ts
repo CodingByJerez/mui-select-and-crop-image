@@ -58,7 +58,7 @@ const getCroppedImageService: IGetCroppedImageService = async (fileImage, pixelC
   const image = await _createImage(fileReader.result as string);
   const canvas = _imageLoaded(image, pixelCrop);
 
-  if (returnType === 'base64') {
+  if (returnType === RETURN_TYPE.BASE64) {
     return canvas.toDataURL(fileImage.type);
   }
 
