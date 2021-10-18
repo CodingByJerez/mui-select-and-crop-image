@@ -3,12 +3,13 @@ import React, { FunctionComponent, useMemo } from 'react';
 import { Provider } from './Context';
 import Crop from './Crop';
 import DropArea from './DropArea';
+import { RETURN_TYPE } from './getCroppedImageService';
 import { IFileImage } from './useDropzone';
 
 // ---------------------------------------------------------------------
 
 type IPreview = { url?: string } & ({ width: number } | { fullWidth: true });
-type IImage = { width: number; height: number };
+type IImage = { width: number; height: number; returnType?: RETURN_TYPE };
 
 interface IProps {
   preview: IPreview;
@@ -51,5 +52,5 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResul
   );
 };
 
-export { SelectAndCropImage, Provider as SelectAndCropImageProvider };
+export { SelectAndCropImage, Provider as SelectAndCropImageProvider, RETURN_TYPE as SELECT_AND_CROP_IMAGE_RETURN_TYPE };
 export default SelectAndCropImage;

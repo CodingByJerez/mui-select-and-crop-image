@@ -5,7 +5,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, IconButton, Slider,
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import { Area } from '../node_modules/react-easy-crop/types';
-import getCroppedImageService from './getCroppedImageService';
+import getCroppedImageService, { RETURN_TYPE } from './getCroppedImageService';
 import { IFileImage } from './useDropzone';
 import useStore from './useStore';
 import Util from './util';
@@ -16,13 +16,14 @@ type IProps = {
   image: IFileImage;
   width: number;
   height: number;
+  returnType?: RETURN_TYPE;
   onClose: VoidFunction;
   onResult(image: string): void;
 };
 
 // ---------------------------------------------------------------------
 
-const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClose }) => {
+const Crop: FunctionComponent<IProps> = ({ image, width, height, returnType, onResult, onClose }) => {
   const { trans } = useStore();
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<null | Area>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -57,8 +58,7 @@ const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClo
       if (croppedAreaPixels === null) {
         return;
       }
-      const croppedImage = await getCroppedImageService(image, croppedAreaPixels);
-      console.log(croppedImage);
+      const croppedImage = await getCroppedImageService(image, croppedAreaPixels, returnType);
       onResult(croppedImage);
     } catch (e) {
       console.error(e);

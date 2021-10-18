@@ -3,11 +3,16 @@ import { IFileImage } from './useDropzone';
 
 // ---------------------------------------------------------------------
 
+enum RETURN_TYPE {
+  BLOD = 'blob',
+  BASE64 = 'base64',
+}
+
 type IFileReader = (fileImage: IFileImage) => Promise<FileReader>;
 type ICreateImage = (fileReaderResult: string) => Promise<HTMLImageElement>;
 type IImageLoaded = (image: HTMLImageElement, pixelCrop: Area) => HTMLCanvasElement;
 
-type IGetCroppedImageService = (fileImage: IFileImage, pixelCrop: Area, returnType?: 'blob' | 'base64') => Promise<string>;
+type IGetCroppedImageService = (fileImage: IFileImage, pixelCrop: Area, returnType?: RETURN_TYPE) => Promise<string>;
 
 // ---------------------------------------------------------------------
 
@@ -66,5 +71,7 @@ const getCroppedImageService: IGetCroppedImageService = async (fileImage, pixelC
     }, fileImage.type);
   });
 };
+
+export { RETURN_TYPE };
 
 export default getCroppedImageService;

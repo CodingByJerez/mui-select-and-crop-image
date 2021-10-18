@@ -1,4 +1,4 @@
-import SelectAndCropImage, { SelectAndCropImageProvider } from 'mui-select-and-crop-image';
+import SelectAndCropImage, { SelectAndCropImageProvider, SELECT_AND_CROP_IMAGE_RETURN_TYPE } from 'mui-select-and-crop-image';
 import React, { useState } from 'react';
 
 const App: React.FunctionComponent = () => {
@@ -18,7 +18,7 @@ const App: React.FunctionComponent = () => {
         close: 'Fermer',
       }}
     >
-      <SelectAndCropImage image={{ height: 200, width: 700 }} preview={{ width: 400, url: currentImage }} onResult={handleResult} />;
+      <SelectAndCropImage image={{ height: 200, width: 700, returnType: SELECT_AND_CROP_IMAGE_RETURN_TYPE.BASE64 }} preview={{ width: 400, url: currentImage }} onResult={handleResult} />;
     </SelectAndCropImageProvider>
   );
 };
