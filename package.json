@@ -2,7 +2,7 @@
   "private": false,
   "name": "mui-select-and-crop-image",
   "version": "1.0.0",
-  "description": "mui-upload-and-crop-image",
+  "description": "mui-select-and-crop-image",
   "author": "CodingByJerez",
   "license": "MIT",
   "main": "dist/index.js",

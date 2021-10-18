@@ -18,7 +18,7 @@ interface IProps {
 
 // ---------------------------------------------------------------------
 
-export const UploadAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResult, onDelete }) => {
+const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResult, onDelete }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
@@ -44,3 +44,6 @@ export const UploadAndCropImage: FunctionComponent<IProps> = ({ preview, image, 
     </React.Fragment>
   );
 };
+
+export { SelectAndCropImage };
+export default SelectAndCropImage;
