@@ -38,7 +38,7 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, onResul
   return (
     <React.Fragment>
       <DropArea {...previewProps} image={preview.url} onDrop={setFile} onDelete={onDelete} />
-      <Dialog open={!!file} onClose={handleDialogClose}>
+      <Dialog open={!!file} onClose={handleDialogClose} maxWidth={false}>
         {file && <Crop image={file} width={image.width} height={image.height} onResult={onResult} onClose={handleDialogClose} />}
       </Dialog>
     </React.Fragment>

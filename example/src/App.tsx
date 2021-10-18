@@ -8,7 +8,7 @@ const App: React.FunctionComponent = () => {
     setCurrentImage(newImage);
   };
 
-  return <SelectAndCropImage image={{ height: 200, width: 500 }} preview={{ width: 400, url: currentImage }} onResult={handleResult} />;
+  return <SelectAndCropImage image={{ height: 200, width: 700 }} preview={{ width: 400, url: currentImage }} onResult={handleResult} />;
 };
 
 export default App;
