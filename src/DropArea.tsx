@@ -64,6 +64,11 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
     setAnchorOption(null);
   };
 
+  const handleClickDelete = (): void => {
+    onDelete!();
+    setAnchorOption(null);
+  };
+
   const handleClickEdit = (): void => {
     setAnchorOption(null);
     open();
@@ -84,7 +89,7 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
               {onDelete && image && (
                 <React.Fragment>
                   <Divider />
-                  <MenuItem color="error" onClick={handleClose}>
+                  <MenuItem color="error" onClick={handleClickDelete}>
                     {trans.delete}
                   </MenuItem>
                 </React.Fragment>
