@@ -24,15 +24,10 @@ type IProps = {
 
 const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClose }) => {
   const { trans } = useStore();
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<null | Area>(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+
   const { minZoom, maxZoom } = useMemo(() => {
-    if (height > width) {
-      throw new Error('only for horizontal photo for the moment');
-    }
-
-    if (image.height < height || image.width < width) {
-      throw new Error(`Insufficient image size. image:{ h:${image.height}, w:${image.width} } require:{ h:${height}, w:${width} }`);
-    }
-
     const aspectBox = image.height / image.width;
     let minZoom: number;
     if (image.width > image.height) {
@@ -47,8 +42,6 @@ const Crop: FunctionComponent<IProps> = ({ image, width, height, onResult, onClo
     };
   }, [image]);
 
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<null | Area>(null);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(minZoom);
 
   const onCropComplete = (_: Area, croppedAreaPixels: Area) => {

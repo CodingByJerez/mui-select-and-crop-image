@@ -31,8 +31,8 @@ type IDropAreaProps = {
   width: string | number;
   aspect: number;
   image?: string;
-  minWidth?: number;
-  minHeight?: number;
+  minWidth: number;
+  minHeight: number;
   drop?: boolean;
   onDrop: (file: IFileImage) => void;
   onDelete?: VoidFunction;
