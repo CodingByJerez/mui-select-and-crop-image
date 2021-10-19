@@ -74,6 +74,7 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
     open();
   };
 
+  const enDelete: boolean = !!onDelete && !!image;
   return (
     <Box sx={{ width }}>
       <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})` }}>
@@ -86,13 +87,11 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
             </Fab>
             <Menu anchorEl={anchorOption} open={!!anchorOption} onClose={handleClose}>
               <MenuItem onClick={handleClickEdit}>{trans.edit}</MenuItem>
-              {onDelete && image && (
-                <React.Fragment>
-                  <Divider />
-                  <MenuItem color="error" onClick={handleClickDelete}>
-                    {trans.delete}
-                  </MenuItem>
-                </React.Fragment>
+              {enDelete && <Divider />}
+              {enDelete && (
+                <MenuItem color="error" onClick={handleClickDelete}>
+                  {trans.delete}
+                </MenuItem>
               )}
             </Menu>
           </Box>
