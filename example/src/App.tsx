@@ -22,7 +22,9 @@ const App: React.FunctionComponent = () => {
         loader: '#FFFFFF',
       }}
     >
-      <SelectAndCropImage image={{ height: 200, width: 700, returnType: SELECT_AND_CROP_IMAGE_RETURN_TYPE.BASE64 }} preview={{ width: 400, url: currentImage }} onResult={handleResult} />
+      <SelectAndCropImage image={{ height: 200, width: 700, returnType: SELECT_AND_CROP_IMAGE_RETURN_TYPE.BASE64 }} preview={{ width: 400, url: currentImage }} onResult={handleResult}>
+        sdsd
+      </SelectAndCropImage>
     </SelectAndCropImageProvider>
   );
 };

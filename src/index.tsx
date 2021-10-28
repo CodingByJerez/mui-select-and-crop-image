@@ -21,7 +21,7 @@ interface IProps {
 
 // ---------------------------------------------------------------------
 
-const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoading, onResult, onDelete }) => {
+const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoading, onResult, onDelete, children }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
@@ -45,7 +45,9 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoadi
 
   return (
     <React.Fragment>
-      <DropArea {...previewProps} isLoading={isLoading} minHeight={image.height} minWidth={image.width} image={preview.url} onDrop={setFile} onDelete={onDelete} />
+      <DropArea {...previewProps} isLoading={isLoading} minHeight={image.height} minWidth={image.width} image={preview.url} onDrop={setFile} onDelete={onDelete}>
+        {children}
+      </DropArea>
       <Dialog open={!!file} onClose={handleDialogClose} maxWidth={false}>
         {file && <Crop image={file} width={image.width} height={image.height} returnType={image.returnType} onResult={handleResult} onClose={handleDialogClose} />}
       </Dialog>
