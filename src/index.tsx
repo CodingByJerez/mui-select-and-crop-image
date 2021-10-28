@@ -66,6 +66,6 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ ref, preview, image, hi
     </React.Fragment>
   );
 };
-
+export type { IDropAreaRef as SelectAndCropImageDropAreaRef };
 export { SelectAndCropImage, Provider as SelectAndCropImageProvider, RETURN_TYPE as SELECT_AND_CROP_IMAGE_RETURN_TYPE };
 export default SelectAndCropImage;
