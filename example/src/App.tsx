@@ -13,7 +13,7 @@ const App: React.FunctionComponent = () => {
     <SelectAndCropImageProvider
       trans={{
         title: "Editer l'image",
-        edit: 'Editer',
+        editImage: 'Editer image',
         save: 'Enregistrer',
         delete: 'Supprimer',
         close: 'Fermer',

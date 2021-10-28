@@ -3,7 +3,7 @@ import React, { createContext, FunctionComponent } from 'react';
 type IContext = {
   trans: {
     title: string;
-    edit: string;
+    editImage: string;
     close: string;
     save: string;
     delete: string;
@@ -16,7 +16,7 @@ type IContext = {
 const defaultValues: IContext = {
   trans: {
     title: 'Crop Image',
-    edit: 'Edit',
+    editImage: 'Edit image',
     close: 'Close',
     save: 'Save',
     delete: 'Delete',

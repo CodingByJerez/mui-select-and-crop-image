@@ -1,8 +1,8 @@
 import { Dialog } from '@mui/material';
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, RefObject, useMemo } from 'react';
 import { Provider } from './Context';
 import Crop from './Crop';
-import DropArea from './DropArea';
+import DropArea, { IDropAreaRef } from './DropArea';
 import { RETURN_TYPE } from './getCroppedImageService';
 import { IFileImage } from './useDropzone';
 
@@ -12,16 +12,18 @@ type IPreview = { url?: string } & ({ width: number } | { fullWidth: true });
 type IImage = { width: number; height: number; returnType?: RETURN_TYPE };
 
 interface IProps {
+  ref?: RefObject<IDropAreaRef>;
   preview: IPreview;
   image: IImage;
   isLoading?: boolean;
+  hideMenuButton?: boolean;
   onResult(image: string): void;
   onDelete?: VoidFunction;
 }
 
 // ---------------------------------------------------------------------
 
-const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoading, onResult, onDelete, children }) => {
+const SelectAndCropImage: FunctionComponent<IProps> = ({ ref, preview, image, hideMenuButton, isLoading, onResult, onDelete, children }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
@@ -45,7 +47,17 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ preview, image, isLoadi
 
   return (
     <React.Fragment>
-      <DropArea {...previewProps} isLoading={isLoading} minHeight={image.height} minWidth={image.width} image={preview.url} onDrop={setFile} onDelete={onDelete}>
+      <DropArea
+        ref={ref}
+        {...previewProps}
+        isLoading={isLoading}
+        hideMenuButton={hideMenuButton}
+        minHeight={image.height}
+        minWidth={image.width}
+        image={preview.url}
+        onDrop={setFile}
+        onDelete={onDelete}
+      >
         {children}
       </DropArea>
       <Dialog open={!!file} onClose={handleDialogClose} maxWidth={false}>

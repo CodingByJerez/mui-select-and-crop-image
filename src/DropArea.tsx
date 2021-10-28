@@ -1,6 +1,6 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { alpha, Box, CircularProgress, Divider, Fab, Menu, MenuItem, styled } from '@mui/material';
-import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction, MouseEvent, ReactNode, useEffect, useImperativeHandle, useState } from 'react';
 import useDropImage, { IFileImage } from './useDropzone';
 import useStore from './useStore';
 
@@ -12,14 +12,14 @@ const CardMediaStyle = styled('div')(({ theme }) => ({
   border: 0,
   borderStyle: 'dotted',
   alignItems: 'center',
-  borderRadius: theme.spacing(1),
+  borderRadius: theme.shape.borderRadius, //theme.spacing(1),
   backgroundColor: alpha(theme.palette.primary.main, 0.72),
 }));
 
 const CoverStyle = styled('img')(({ theme }) => ({
   zIndex: 10,
   top: 0,
-  borderRadius: theme.spacing(1),
+  borderRadius: theme.shape.borderRadius,
   objectFit: 'cover',
   position: 'absolute',
   width: '100%',
@@ -30,6 +30,7 @@ const CoverStyle = styled('img')(({ theme }) => ({
 
 type IDropAreaProps = {
   isLoading?: boolean;
+  hideMenuButton?: boolean;
   width: string | number;
   aspect: number;
   image?: string;
@@ -38,11 +39,21 @@ type IDropAreaProps = {
   drop?: boolean;
   onDrop: (file: IFileImage) => void;
   onDelete?: VoidFunction;
+  children: ReactNode;
 };
+
+type IDropAreaRef = {
+  open: VoidFunction;
+};
+
+type IDropAreaRooms = ForwardRefRenderFunction<IDropAreaRef, IDropAreaProps>;
 
 // ---------------------------------------------------------------------
 
-const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading, onDelete, onDrop, minWidth, minHeight, children, ...props }) => {
+const DropArea: IDropAreaRooms = (
+  { width, aspect, isLoading, hideMenuButton, onDelete, onDrop, minWidth, minHeight, children, ...props }: IDropAreaProps /* Temp wait up microbundle for comp eslint 8 */,
+  ref,
+) => {
   const { trans, colors } = useStore();
 
   const [image, setImage] = useState<null | string>(props.image || null);
@@ -55,6 +66,10 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
   }, [props.image]);
 
   const { getRootProps, open, getInputProps } = useDropImage({ onDrop, minWidth, minHeight });
+
+  useImperativeHandle(ref, () => ({
+    open,
+  }));
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     setAnchorOption(event.currentTarget);
@@ -86,20 +101,22 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
               {children}
             </Box>
           )}
-          <Box position="absolute" top={0} right={0} m={1} zIndex={11}>
-            <Fab size="small" color="default" onClick={handleClick}>
-              <MoreVertIcon />
-            </Fab>
-            <Menu anchorEl={anchorOption} open={!!anchorOption} onClose={handleClose}>
-              <MenuItem onClick={handleClickEdit}>{trans.edit}</MenuItem>
-              {enDelete && <Divider />}
-              {enDelete && (
-                <MenuItem color="error" onClick={handleClickDelete}>
-                  {trans.delete}
-                </MenuItem>
-              )}
-            </Menu>
-          </Box>
+          {!hideMenuButton && (
+            <Box position="absolute" top={0} right={0} m={1} zIndex={11}>
+              <Fab size="small" color="default" onClick={handleClick}>
+                <MoreVertIcon />
+              </Fab>
+              <Menu anchorEl={anchorOption} open={!!anchorOption} onClose={handleClose}>
+                <MenuItem onClick={handleClickEdit}>{trans.editImage}</MenuItem>
+                {enDelete && <Divider />}
+                {enDelete && (
+                  <MenuItem color="error" onClick={handleClickDelete}>
+                    {trans.delete}
+                  </MenuItem>
+                )}
+              </Menu>
+            </Box>
+          )}
           <input {...getInputProps()} />
         </Box>
       </CardMediaStyle>
@@ -107,4 +124,5 @@ const DropArea: FunctionComponent<IDropAreaProps> = ({ width, aspect, isLoading,
   );
 };
 
-export default DropArea;
+export type { IDropAreaRef };
+export default forwardRef<IDropAreaRef, IDropAreaProps>(DropArea);
