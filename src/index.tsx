@@ -12,7 +12,7 @@ type IPreview = { url?: string } & ({ width: number } | { fullWidth: true });
 type IImage = { width: number; height: number; returnType?: RETURN_TYPE };
 
 interface IProps {
-  ref?: RefObject<IDropAreaRef>;
+  onRef?: RefObject<IDropAreaRef>;
   preview: IPreview;
   image: IImage;
   isLoading?: boolean;
@@ -23,7 +23,7 @@ interface IProps {
 
 // ---------------------------------------------------------------------
 
-const SelectAndCropImage: FunctionComponent<IProps> = ({ ref, preview, image, hideMenuButton, isLoading, onResult, onDelete, children }) => {
+const SelectAndCropImage: FunctionComponent<IProps> = ({ onRef, preview, image, hideMenuButton, isLoading, onResult, onDelete, children }) => {
   const [file, setFile] = React.useState<null | IFileImage>(null);
 
   const previewProps = useMemo(() => {
@@ -48,7 +48,7 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ ref, preview, image, hi
   return (
     <React.Fragment>
       <DropArea
-        ref={ref}
+        ref={onRef}
         {...previewProps}
         isLoading={isLoading}
         hideMenuButton={hideMenuButton}
