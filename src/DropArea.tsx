@@ -94,11 +94,15 @@ const DropArea: IDropAreaRooms = (
     <Box sx={{ width }}>
       <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})` }}>
         <Box display={'flex'} position={'absolute'} top={0} bottom={0} left={0} right={0} justifyContent={'center'} alignItems={'center'}>
-          {isLoading && <CircularProgress color="info" sx={{ color: colors.loader }} />}
           {image && <CoverStyle alt="Preview Image" src={image} />}
           {children && (
             <Box width={'100%'} height={'100%'} position={'relative'} borderRadius={1}>
               {children}
+            </Box>
+          )}
+          {isLoading && (
+            <Box display={'flex'} position={'absolute'} top={0} bottom={0} left={0} right={0} zIndex={10} justifyContent={'center'} alignItems={'center'}>
+              <CircularProgress color="info" sx={{ color: colors.loader }} />
             </Box>
           )}
           {!hideMenuButton && (
