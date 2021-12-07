@@ -10,7 +10,7 @@ enum RETURN_TYPE {
 
 type IFileReader = (fileImage: IFileImage) => Promise<FileReader>;
 type ICreateImage = (fileReaderResult: string) => Promise<HTMLImageElement>;
-type IImageLoaded = (image: HTMLImageElement, pixelCrop: Area) => HTMLCanvasElement;
+type IImageLoaded = (image: HTMLImageElement, pixelCrop: Area, typeMime: File['type']) => HTMLCanvasElement;
 
 type IGetCroppedImageService = <R extends RETURN_TYPE | undefined = RETURN_TYPE.BLOD>(fileImage: IFileImage, pixelCrop: Area, returnType?: R) => Promise<string | { url: string; blob: Blob }>;
 
@@ -35,7 +35,7 @@ const _createImage: ICreateImage = fileReaderResult => {
   });
 };
 
-const _imageLoaded: IImageLoaded = (image, pixelCrop) => {
+const _imageLoaded: IImageLoaded = (image, pixelCrop, typeMime) => {
   const canvas = document.createElement('canvas');
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
@@ -44,7 +44,7 @@ const _imageLoaded: IImageLoaded = (image, pixelCrop) => {
   if (ctx === null) {
     throw new Error('');
   }
-
+  ctx.fillStyle = typeMime === 'image/png' ? 'transparent' : '#FFFFFF';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height);
 
@@ -56,7 +56,7 @@ const _imageLoaded: IImageLoaded = (image, pixelCrop) => {
 const getCroppedImageService: IGetCroppedImageService = async (fileImage, pixelCrop, returnType) => {
   const fileReader = await _fileReader(fileImage);
   const image = await _createImage(fileReader.result as string);
-  const canvas = _imageLoaded(image, pixelCrop);
+  const canvas = _imageLoaded(image, pixelCrop, fileImage.type);
 
   if (returnType === RETURN_TYPE.BASE64) {
     return canvas.toDataURL(fileImage.type);
