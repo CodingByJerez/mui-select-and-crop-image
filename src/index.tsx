@@ -9,17 +9,24 @@ import { IFileImage } from './useDropzone';
 // ---------------------------------------------------------------------
 
 type IPreview = { url?: string } & ({ width: number } | { fullWidth: true });
-type IImage = { width: number; height: number; returnType?: RETURN_TYPE };
+type IImage<T extends RETURN_TYPE | undefined> = { width: number; height: number; returnType?: T };
 
-interface IProps {
+type IProps = {
   onRef?: RefObject<IDropAreaRef>;
   preview: IPreview;
-  image: IImage;
   isLoading?: boolean;
   hideMenuButton?: boolean;
-  onResult(image: string): void;
   onDelete?: VoidFunction;
-}
+} & (
+  | {
+      image: IImage<RETURN_TYPE.BLOD | undefined>;
+      onResult(image: { url: string; blob: Blob }): void;
+    }
+  | {
+      image: IImage<RETURN_TYPE.BASE64>;
+      onResult(image: string): void;
+    }
+);
 
 // ---------------------------------------------------------------------
 
@@ -40,8 +47,8 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ onRef, preview, image, 
     setFile(null);
   };
 
-  const handleResult = (image: string): void => {
-    onResult(image);
+  const handleResult = (image: Parameters<IProps['onResult']>[0]): void => {
+    onResult(image as any);
     setFile(null);
   };
 

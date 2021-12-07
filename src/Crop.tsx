@@ -16,10 +16,17 @@ type IProps = {
   image: IFileImage;
   width: number;
   height: number;
-  returnType?: RETURN_TYPE;
   onClose: VoidFunction;
-  onResult(image: string): void;
-};
+} & (
+  | {
+      returnType?: RETURN_TYPE.BLOD;
+      onResult(image: { url: string; blob: Blob }): void;
+    }
+  | {
+      returnType: RETURN_TYPE.BASE64;
+      onResult(image: string): void;
+    }
+);
 
 // ---------------------------------------------------------------------
 
@@ -59,7 +66,7 @@ const Crop: FunctionComponent<IProps> = ({ image, width, height, returnType, onR
         return;
       }
       const croppedImage = await getCroppedImageService(image, croppedAreaPixels, returnType);
-      onResult(croppedImage);
+      onResult(croppedImage as any);
     } catch (e) {
       console.error(e);
     }

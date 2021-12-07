@@ -11,6 +11,9 @@ type IContext = {
   colors: {
     loader: string;
   };
+  /*style: {
+    PreviewBorderRadius;
+  };*/
 };
 
 const defaultValues: IContext = {
