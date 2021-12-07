@@ -9,6 +9,7 @@ type IContext = {
     delete: string;
   };
   colors: {
+    backgroundColor?: string;
     loader: string;
   };
   /*style: {

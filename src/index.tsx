@@ -8,7 +8,7 @@ import { IFileImage } from './useDropzone';
 
 // ---------------------------------------------------------------------
 
-type IPreview = { url?: string } & ({ width: number } | { fullWidth: true });
+type IPreview = { url?: string; backgroundColor?: string } & ({ width: number } | { fullWidth: true });
 type IImage<T extends RETURN_TYPE | undefined> = { width: number; height: number; returnType?: T };
 
 type IProps = {
@@ -61,6 +61,7 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ onRef, preview, image, 
         hideMenuButton={hideMenuButton}
         minHeight={image.height}
         minWidth={image.width}
+        backgroundColor={preview?.backgroundColor}
         image={preview.url}
         onDrop={setFile}
         onDelete={onDelete}

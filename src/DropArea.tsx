@@ -29,6 +29,7 @@ const CoverStyle = styled('img')(({ theme }) => ({
 // ---------------------------------------------------------------------
 
 type IDropAreaProps = {
+  backgroundColor?: string;
   isLoading?: boolean;
   hideMenuButton?: boolean;
   width: string | number;
@@ -51,7 +52,7 @@ type IDropAreaRooms = ForwardRefRenderFunction<IDropAreaRef, IDropAreaProps>;
 // ---------------------------------------------------------------------
 
 const DropArea: IDropAreaRooms = (
-  { width, aspect, isLoading, hideMenuButton, onDelete, onDrop, minWidth, minHeight, children, ...props }: IDropAreaProps /* Temp wait up microbundle for comp eslint 8 */,
+  { width, aspect, isLoading, hideMenuButton, onDelete, onDrop, minWidth, minHeight, children, backgroundColor, ...props }: IDropAreaProps /* Temp wait up microbundle for comp eslint 8 */,
   ref,
 ) => {
   const { trans, colors } = useStore();
@@ -92,7 +93,7 @@ const DropArea: IDropAreaRooms = (
   const enDelete: boolean = !!onDelete && !!image;
   return (
     <Box sx={{ width }}>
-      <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})` }}>
+      <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})`, backgroundColor: backgroundColor || colors.backgroundColor }}>
         <Box display={'flex'} position={'absolute'} top={0} bottom={0} left={0} right={0} justifyContent={'center'} alignItems={'center'}>
           {image && <CoverStyle alt="Preview Image" src={image} />}
           {children && (

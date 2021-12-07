@@ -22,6 +22,7 @@ const App: React.FunctionComponent = () => {
           close: 'Fermer',
         }}
         colors={{
+          // backgroundColor: 'red',
           loader: '#FFFFFF',
         }}
       >
