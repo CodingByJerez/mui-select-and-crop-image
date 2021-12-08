@@ -1,6 +1,6 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { alpha, Box, CircularProgress, Divider, Fab, Menu, MenuItem, styled } from '@mui/material';
-import React, { forwardRef, ForwardRefRenderFunction, MouseEvent, ReactNode, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction, MouseEvent, ReactNode, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import useDropImage, { IFileImage } from './useDropzone';
 import useStore from './useStore';
 
@@ -29,6 +29,7 @@ const CoverStyle = styled('img')(({ theme }) => ({
 // ---------------------------------------------------------------------
 
 type IDropAreaProps = {
+  backgroundType?: 'solid' | 'checkerboard';
   backgroundColor?: string;
   isLoading?: boolean;
   hideMenuButton?: boolean;
@@ -52,7 +53,20 @@ type IDropAreaRooms = ForwardRefRenderFunction<IDropAreaRef, IDropAreaProps>;
 // ---------------------------------------------------------------------
 
 const DropArea: IDropAreaRooms = (
-  { width, aspect, isLoading, hideMenuButton, onDelete, onDrop, minWidth, minHeight, children, backgroundColor, ...props }: IDropAreaProps /* Temp wait up microbundle for comp eslint 8 */,
+  {
+    width,
+    aspect,
+    isLoading,
+    hideMenuButton,
+    onDelete,
+    onDrop,
+    minWidth,
+    minHeight,
+    children,
+    backgroundColor,
+    backgroundType,
+    ...props
+  }: IDropAreaProps /* Temp wait up microbundle for comp eslint 8 */,
   ref,
 ) => {
   const { trans, colors } = useStore();
@@ -90,10 +104,23 @@ const DropArea: IDropAreaRooms = (
     open();
   };
 
+  const sxCard = useMemo(() => {
+    const sx: Record<string, string | undefined> = { paddingTop: `calc(100% * ${aspect})` };
+    if (backgroundType === 'checkerboard') {
+      sx.backgroundColor = '#FFFFFF';
+      sx.backgroundImage = 'linear-gradient(45deg, #EEE 25%, transparent 25%, transparent 75%, #EEE 75%), linear-gradient(45deg, #EEE 25%, transparent 25%, transparent 75%, #EEE 75%)';
+      sx.backgroundSize = '10px 10px';
+      sx.backgroundPosition = '0 0, 5px 5px';
+    } else {
+      sx.backgroundColor = backgroundColor || colors.backgroundColor;
+    }
+    return sx;
+  }, [backgroundType, backgroundColor, colors.backgroundColor]);
+
   const enDelete: boolean = !!onDelete && !!image;
   return (
     <Box sx={{ width }}>
-      <CardMediaStyle {...getRootProps()} sx={{ paddingTop: `calc(100% * ${aspect})`, backgroundColor: backgroundColor || colors.backgroundColor }}>
+      <CardMediaStyle {...getRootProps()} sx={sxCard}>
         <Box display={'flex'} position={'absolute'} top={0} bottom={0} left={0} right={0} justifyContent={'center'} alignItems={'center'}>
           {image && <CoverStyle alt="Preview Image" src={image} />}
           {children && (

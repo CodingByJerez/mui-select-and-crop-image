@@ -8,7 +8,10 @@ import { IFileImage } from './useDropzone';
 
 // ---------------------------------------------------------------------
 
-type IPreview = { url?: string; backgroundColor?: string } & ({ width: number } | { fullWidth: true });
+type IPreviewBgSolid = { backgroundColor?: string; backgroundType?: 'solid' };
+type IPreviewBgCheckerboard = { backgroundColor?: undefined; backgroundType: 'checkerboard' };
+
+type IPreview = { url?: string } & (IPreviewBgSolid | IPreviewBgCheckerboard) & ({ width: number } | { fullWidth: true });
 type IImage<T extends RETURN_TYPE | undefined> = { width: number; height: number; returnType?: T };
 
 type IProps = {
@@ -62,6 +65,7 @@ const SelectAndCropImage: FunctionComponent<IProps> = ({ onRef, preview, image, 
         minHeight={image.height}
         minWidth={image.width}
         backgroundColor={preview?.backgroundColor}
+        backgroundType={preview?.backgroundType}
         image={preview.url}
         onDrop={setFile}
         onDelete={onDelete}
